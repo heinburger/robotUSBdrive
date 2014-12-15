@@ -27,10 +27,29 @@ robot.config(function($stateProvider, $urlRouterProvider){
         $scope.insertMap();
       }
     })
-    .state('draw', {
-      url: '/draw',
-      templateUrl:'assets/templates/draw.html',
+    .state('photo', {
+      url: '/photo',
+      templateUrl:'assets/templates/photo.html',
       controller: function ($scope, $state) {
+
+        $scope.useCamera = function(){
+          var uid = randomUID();
+          var promise;
+          promise = takePhoto(uid);
+          q.when(promise).then(function(){
+            $scope.pathToImage='photos/'+uid+'/photo.jpg';
+            $scope.uid=uid;
+            $scope.$digest();
+          });
+
+        };
+  
+      }
+    })
+    .state('draw', {
+      url: '/draw/:uid',
+      templateUrl:'assets/templates/draw.html',
+      controller: function ($scope, $state, $stateParams) {
         $scope.pageHeight = $('#page').height();
         $scope.pageWidth = $('#page').width();
         $.each(['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f', '#000', '#fff'], function() {
@@ -39,13 +58,39 @@ robot.config(function($stateProvider, $urlRouterProvider){
         $.each([3, 5, 10, 15], function() {
           $('.tools').append("<a href='#colors_sketch' data-size='" + this + "' style='background: #ccc; padding:3px;'>" + this + "</a>");
         });
+        if ($stateParams.uid) {
+          $('#colors_sketch').css('background', "url('photos/"+$stateParams.uid+"/photo.jpg')");
+          $('#colors_sketch').css('background-size','cover');
+        }
         $('#colors_sketch').sketch();
+
+
+        $scope.saveImage = function() {
+          //save to the root directory of the drive
+          var image = $('#colors_sketch').get(0).toDataURL();
+          var link = document.createElement("a");
+          //link.download = 'myDrawing';
+          link.href = image;
+          //link.target = '_blank';
+          link.click();
+
+
+        };
+          
       }
     });
 
   $urlRouterProvider.otherwise('/');
 
-})
+});
+
+function randomUID(){
+  return 'xxxxxxxxxxxx4xxxyxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+  });
+
+}
 
 
 

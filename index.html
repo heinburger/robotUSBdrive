@@ -19,6 +19,34 @@
 			// get the system platform using node.js
 			//var os = require('os');
 			//document.write('Our computer is: ', os.platform());
+			var imagesnap = require('imagesnap');
+			var fs = require('fs');
+			var q = require('q');
+			var gm = require('gm').subClass({ imageMagick: true });
+
+
+			if (!fs.existsSync('photos')) {
+				fs.mkdir('photos/');
+			}
+
+			var takePhoto = function(uid) {
+				var photoPromise = q.defer();
+				fs.mkdir('photos/'+uid+'/', function(err){
+					if (err) { return err; photoPromise.reject(); }
+					else {
+						var imageStream = fs.createWriteStream('photos/'+uid+'/photo.jpg');
+						var saved = imagesnap().pipe(imageStream);
+						saved.on('finish', function () {
+							photoPromise.resolve();
+						});
+					}
+				});
+				return photoPromise.promise;
+			};
+
+			var savePhoto = function(photo,layer){
+
+			}
 
 		</script>
 

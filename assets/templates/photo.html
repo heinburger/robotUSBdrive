@@ -1,0 +1,5 @@
+<div id="photo">
+	<img ng-src="{{pathToImage}}" style="width:100%;">
+</div>
+<button class="btn btn-default" ng-click="useCamera()"><span class="glyphicon glyphicon-camera"></span> take a picture</button>
+<a ui-sref="draw({uid:uid})"><button class="btn btn-default" ng-disabled="!uid"><span class="glyphicon glyphicon-pencil"></span></button></a>

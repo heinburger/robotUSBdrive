@@ -1,4 +1,9 @@
 <div class="tools">
-  <a href="#colors_sketch" data-download="png" style="float: right; width: 100px;"><button class="btn btn-default">Download</button></a>
+	<input id="save" type="file" nwsaveas />
+  <button class="btn btn-default right" ng-click="saveImage()">Save</button>
+  <button class="btn btn-default right">Send</button>
 </div>
-<canvas id="colors_sketch" width="{{pageWidth}}" height="{{pageHeight}}"></canvas>
+<canvas id="colors_sketch" class="crosshair" width="{{pageWidth}}" height="{{pageHeight}}"></canvas>
+
+
+

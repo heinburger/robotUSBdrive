@@ -16,8 +16,13 @@ html, body { height: 100%; }
 .right { float:right; }
 .margin-top { margin-top:20px; }
 .center { text-align:center; }
+.align-right { text-align:right; }
+.align-left { text-align:left; }
+
+.icon-font { font-size:110px; }
 
 .pointer { cursor:pointer; }
+.crosshair { cursor:crosshair; }
 
 .map { height:100%; width:100%; position:absolute; }
 .fill { height:100%; width:100%; }
