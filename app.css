@@ -7,11 +7,29 @@ html, body { height: 100%; }
 	font-size: 11px;
 	line-height:20px;
 	text-align:right;
-	background:#55F;
+	/*background:#55F;*/
+	background:#444;
 	color:#FFF;
 	padding:5px;
 	margin:0;
 }
+#page {
+	box-shadow: 0px 0px 10px #222;
+}
+#home-btn { 
+	position:absolute; 
+	top:10px; 
+	left: 45px; 
+	border-radius: 21px; 
+	font-size: 20px; 
+	padding:5px 10px; 
+	box-shadow: 1px 1px 5px #444;
+	color:#444; 
+	z-index:100; 
+}
+
+
+
 .left { float:left; }
 .right { float:right; }
 .margin-top { margin-top:20px; }
@@ -24,6 +42,16 @@ html, body { height: 100%; }
 .pointer { cursor:pointer; }
 .crosshair { cursor:crosshair; }
 
+/* draw */
+#draw-tools {
+	position:absolute;
+	top:40px;
+	left:120px;
+}
+.color-swatch { padding:7px; border:1px solid #444; margin-right:2px; }
+.marker { margin:5px; }
+
+/* map */
 .map { height:100%; width:100%; position:absolute; }
 .fill { height:100%; width:100%; }
 

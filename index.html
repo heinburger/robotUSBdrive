@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="robot">
 	<head>
 		<title>robot</title>
 		<!-- css -->
@@ -7,9 +7,10 @@
 		<link rel="stylesheet" href="app.css">
 
 	</head>
-	<body>
+	<body ng-controller="robotCtrl">
 		
-		<p id="draggable" class="pointer"><span class="glyphicon glyphicon-move"></span> MOVE</p>
+		<p id="draggable" class="pointer"><span class="glyphicon glyphicon-move"></span></p>
+		<a ng-hide="hideHome" ui-sref="home"><button id="home-btn" class="btn btn-info"><span class="glyphicon glyphicon-home"></span></button></a>
 
 		<div id="page" class="fill" ui-view></div>
 

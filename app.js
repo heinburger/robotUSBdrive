@@ -1,4 +1,4 @@
-var robot = angular.module('app', ['ui.router']);
+var robot = angular.module('robot', ['ui.router']);
 
 robot.config(function($stateProvider, $urlRouterProvider){
 
@@ -9,22 +9,52 @@ robot.config(function($stateProvider, $urlRouterProvider){
       url: '/',
       templateUrl: 'assets/templates/home.html',
       controller: function($scope, $state) {
-        $scope.helloMessage='hi';
+        
+      }
+    })
+    .state('facetime', {
+      url: '/',
+      templateUrl: 'assets/templates/facetime.html',
+      controller: function($scope, $state) {
+        
       }
     })
     .state('map', {
       url: '/map',
       templateUrl:'assets/templates/map.html',
       controller: function ($scope, $state) {
+        var map;
+        
         $scope.insertMap = function() {
-          new GMaps({
+          map = new GMaps({
             div: '#insert-map',
             lat: 40.457656,
-            lng: -79.717438
-            //mapTypeId: google.maps.MapTypeId.SATELLITE
+            lng: -79.717438,
+            mapTypeId: google.maps.MapTypeId.SATELLITE,
+            zoom:19
           });
         };
         $scope.insertMap();
+
+        map.addMarker({
+          lat: 40.457656,
+          lng: -79.717438,
+          title: "Buggie's House",
+          click: function(e) {
+            
+          },
+          infoWindow: {
+            content: '<p>This is where Buggie lives</p>'
+          }
+        });
+        /*
+        map.drawOverlay({
+          lat: 40.457656,
+          lng: -79.717438,
+          content: '<div class="overlay">This Pittsburgh</div>'
+        });
+        */
+        
       }
     })
     .state('photo', {
@@ -53,10 +83,10 @@ robot.config(function($stateProvider, $urlRouterProvider){
         $scope.pageHeight = $('#page').height();
         $scope.pageWidth = $('#page').width();
         $.each(['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f', '#000', '#fff'], function() {
-          $('.tools').append("<a href='#colors_sketch' data-color='" + this + "' style='background: " + this + "; color: "+this+"'>"+this+"</a>");
+          $('.tools').append("<a href='#colors_sketch' data-color='" + this + "' class='color-swatch' style='background: " + this + "; color: "+this+"'>col</a>");
         });
-        $.each([3, 5, 10, 15], function() {
-          $('.tools').append("<a href='#colors_sketch' data-size='" + this + "' style='background: #ccc; padding:3px;'>" + this + "</a>");
+        $.each([{font:'14px',size:5},{font:'17px',size:15},{font:'20px',size:25}], function() {
+          $('.tools').append("<a href='#colors_sketch' data-size='" + this.size + "' class='marker' style='font-size: "+this.font+";'><span class='glyphicon glyphicon-pencil'></span</a>");
         });
         if ($stateParams.uid) {
           $('#colors_sketch').css('background', "url('photos/"+$stateParams.uid+"/photo.jpg')");
@@ -83,6 +113,22 @@ robot.config(function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise('/');
 
 });
+
+robot.controller('robotCtrl', function ($scope, $http, $state) {
+  $scope.$on('$stateChangeSuccess', function(event, toState, toParam, fromState, fromParam){ 
+    $scope.page = toState.name;
+    $scope.hideHome=true;   
+  
+    if (toState.name==='home') {
+      $scope.hideHome=true;
+    } else {
+      $scope.hideHome=false;
+    }
+
+  });
+
+});
+
 
 function randomUID(){
   return 'xxxxxxxxxxxx4xxxyxxxxx'.replace(/[xy]/g, function(c) {
